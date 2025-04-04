@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class WebView extends StatefulWidget {
   final String websiteLink;
@@ -23,7 +24,7 @@ class _WebViewState extends State<WebView> {
   double progress = 0.0;
   String currentUrl = '';
   bool _isLoading = true;
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   Timer? _inactivityTimer;
 
   // WebView options
@@ -64,6 +65,7 @@ class _WebViewState extends State<WebView> {
     _inactivityTimer?.cancel();
     webViewController?.stopLoading();
     _focusNode.dispose();
+    WakelockPlus.disable();
     super.dispose();
   }
 
